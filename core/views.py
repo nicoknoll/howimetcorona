@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.views.generic import TemplateView, FormView
 from django.db import transaction
+from django.urls import reverse_lazy
 
 from .models import VisitedPoint
 from . import forms
@@ -20,6 +21,7 @@ class HomeView(TemplateView):
 class ReportView(FormView):
     form_class = forms.ReportForm
     template_name = 'core/report_form.html'
+    success_url = reverse_lazy('core:home')
 
     def _process_google_file(self, points_file):
         # TODO: Julius can handle this
@@ -30,7 +32,7 @@ class ReportView(FormView):
         return [{
             'lat': Decimal('52.5256766'),
             'lng': Decimal('13.3415149'),
-            'visited_at': datetime.fromtimestamp(1583057626829),
+            'visited_at': datetime.fromtimestamp(1583057626),
         }]
 
     @transaction.atomic
@@ -52,6 +54,7 @@ class ReportView(FormView):
 class CheckView(FormView):
     form_class = forms.CheckForm
     template_name = 'core/check_form.html'
+    success_url = reverse_lazy('core:home')
 
     def form_valid(self, form):
         # compute risk on the fly

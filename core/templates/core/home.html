@@ -1,5 +1,8 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-    {{ message }}
+    <p>{{ message }}</p>
+
+    <p><a href="{% url 'core:report' %}">Report infected points</a></p>
+    <p><a href="{% url 'core:check' %}">Check your points</a></p>
 {% endblock %}

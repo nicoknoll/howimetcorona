@@ -9,9 +9,8 @@
     </head>
     <body>
         <div class="wrapper">
-            {% block content %}
-            Test
-            {% endblock %}
+            <p><a href="{% url 'core:home' %}">Home</a></p>
+            {% block content %}{% endblock %}
         </div>
     </body>
 </html>
