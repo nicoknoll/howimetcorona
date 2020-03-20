@@ -1,8 +1,19 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block content %}
+    <div class="logo-wrapper">
+        <div class="logo-container">
+            <img src="{% static 'img/world_map.png' %}" width="200" class="logo-container__logo" />
+        </div>
+        <h4 class="logo-wrapper__title">How I Met Corona</h4>
+    </div>
     <p>{{ message }}</p>
 
     <p><a href="{% url 'core:report' %}">Report infected points</a></p>
     <p><a href="{% url 'core:check' %}">Check your points</a></p>
+
+
+
+
 {% endblock %}
