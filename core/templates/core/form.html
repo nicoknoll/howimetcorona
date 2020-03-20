@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <form class="form{% if not form.visible_fields %} form--hidden{% endif %}" method="post" enctype="multipart/form-data">
+        <div class="django-form">
+            <div class="form__fields">
+                {% if form.non_field_errors %}
+                    <div class="form__field form__field--error">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                <div class="form__field{% if field.errors %} form__field--error{% endif %}{% if field.is_hidden %} form__field--hidden{% endif %}{% if field.field.required %} form__field--required{% endif %}">
+                    {% if not field.is_hidden %}
+                        {{ field.label_tag }}
+                    {% endif %}
+
+                    {{ field }}
+
+                    {% if not field.is_hidden %}
+                        {{ field.errors }}
+                    {% endif %}
+
+                    {% if not field.is_hidden and field.help_text %}
+                    <div class="field__note">
+                        {{ field.help_text }}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% csrf_token %}
+
+        <div class="button-bar">
+            {% block form_buttons %}
+                <input class="button" type="submit" name="submit" value="{{ submit_label }}">
+            {% endblock %}
+        </div>
+    </form>
+{% endblock %}
