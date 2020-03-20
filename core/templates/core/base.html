@@ -12,13 +12,13 @@
         <script>
             window.data = {{ js_data|safe }};
         </script>
-        {% endif %}}
+        {% endif %}
 
         {% block head %}{% endblock %}
     </head>
     <body>
         <div class="wrapper">
-            <p><a href="{% url 'core:home' %}">Home</a></p>
+            <div><a href="{% url 'core:home' %}">Home</a></div>
             {% block content %}{% endblock %}
         </div>
     </body>
