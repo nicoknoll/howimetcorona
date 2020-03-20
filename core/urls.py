@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
     re_path(r'^check/?$', views.CheckView.as_view(), name='check'),
     re_path(r'^report/?$', views.ReportView.as_view(), name='report'),
+    re_path(r'^map/?$', views.MapView.as_view(), name='map'),
 ]

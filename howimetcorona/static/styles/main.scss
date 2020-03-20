@@ -1,3 +1,9 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background: #f4f4f4;
     font-family: 'Lato', sans-serif;
@@ -32,3 +38,6 @@ body {
     }
 }
 
+.map {
+    height: calc(100% - 50px);
+}

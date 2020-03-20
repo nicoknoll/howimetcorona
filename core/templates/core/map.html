@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'styles/leaflet.css' %}""/>
+    <script src="{% static 'scripts/leaflet.min.js' %}"></script>
+    <script src="{% static 'scripts/map.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="map" class="map"></div>
+{% endblock %}
