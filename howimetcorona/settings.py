@@ -32,10 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_filters',
-    'hijack',
-    'hijack_admin',
     'compat',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -95,13 +93,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Auth
 
-LOGIN_REDIRECT_URL = '/portal/'
-LOGOUT_REDIRECT_URL = '/portal/'
-LOGIN_URL = '/account/login/'
-
-HIJACK_LOGIN_REDIRECT_URL = '/'
-HIJACK_LOGOUT_REDIRECT_URL = '/admin/auth/user/'
-HIJACK_ALLOW_GET_REQUESTS = True
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/'
 
 
 # Internationalization
@@ -132,7 +126,7 @@ MEDIA_URL = '/media/'
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
-STATICFILES_DIRS = [ STATIC_ROOT, ]
+STATICFILES_DIRS = [STATIC_ROOT]
 
 django_heroku.settings(locals())
 

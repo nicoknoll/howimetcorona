@@ -1,0 +1,17 @@
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>How I met Corona</title>
+        <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    </head>
+    <body>
+        <div class="wrapper">
+            {% block content %}
+            Test
+            {% endblock %}
+        </div>
+    </body>
+</html>
