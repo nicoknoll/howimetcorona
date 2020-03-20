@@ -4,6 +4,7 @@ html, body {
     padding: 0;
 }
 
+
 body {
     color: #191919;
     background: #f4f4f4;
@@ -30,6 +31,7 @@ body {
     }
 }
 
+
 .logo-container {
     width: 150px;
     height: 150px;
@@ -50,6 +52,7 @@ body {
     }
 }
 
+
 .home {
     &__cta {
         margin-top: 50px;
@@ -59,6 +62,7 @@ body {
         flex-wrap: wrap;
     }
 }
+
 
 .btn {
     background-color: #74AF5B;
