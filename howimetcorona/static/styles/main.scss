@@ -4,11 +4,13 @@ html, body {
     padding: 0;
 }
 
+
 body {
     color: #191919;
     background: #f4f4f4;
     font-family: 'Lato', sans-serif;
 }
+
 
 .logo-wrapper {
     width: 100%;
@@ -23,6 +25,7 @@ body {
         margin: 10px;
     }
 }
+
 
 .logo-container {
     width: 150px;
@@ -44,6 +47,7 @@ body {
     }
 }
 
+
 .home {
     &__cta {
         margin-top: 50px;
@@ -53,6 +57,7 @@ body {
         flex-wrap: wrap;
     }
 }
+
 
 .btn {
     background-color: #74AF5B;
