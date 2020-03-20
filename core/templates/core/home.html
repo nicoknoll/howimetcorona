@@ -8,12 +8,10 @@
         </div>
         <h4 class="logo-wrapper__title">How I Met Corona</h4>
     </div>
-    <p>{{ message }}</p>
-
-    <p><a href="{% url 'core:report' %}">Report infected points</a></p>
-    <p><a href="{% url 'core:check' %}">Check your points</a></p>
-
-
+    <div class="home__cta">
+        <a href="{% url 'core:report' %}" class="btn">Report infected points</a>
+        <a href="{% url 'core:check' %}" class="btn">Check your points</a>
+    </div>
 
 
 {% endblock %}

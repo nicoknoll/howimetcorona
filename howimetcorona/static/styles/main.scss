@@ -5,6 +5,7 @@ html, body {
 }
 
 body {
+    color: #191919;
     background: #f4f4f4;
     font-family: 'Lato', sans-serif;
 }
@@ -35,8 +36,41 @@ body {
 
     &__logo {
         width: 120px;
+        transition: width 0.25s;
+
+        &:hover {
+            width: 135px;
+        }
     }
 }
+
+.home {
+    &__cta {
+        margin-top: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+.btn {
+    background-color: #74AF5B;
+    color: white;
+    min-width: 210px;
+    text-align: center;
+    outline: none;
+    padding: 12px 0px;
+    border-radius: 10px;
+    text-decoration: none;
+    margin: 10px 15px;
+    transition: background-color 0.25s;
+
+    &:hover {
+        background-color: #5D913B;
+    }
+}
+
 
 .map {
     height: calc(100% - 50px);
