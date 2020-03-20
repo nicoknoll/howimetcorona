@@ -9,6 +9,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
   points.forEach((point) => {
     console.log([point.lat, point.lng]);
-    L.marker([point.lat, point.lng]).addTo(map);
+    L.marker([point.lat, point.lng], {
+      icon: L.icon({
+        iconSize: [ 25, 41 ],
+        iconAnchor: [ 13, 41 ],
+        iconUrl: '/static/images/marker-icon.png',
+        shadowUrl: '/static/images/marker-shadow.png'
+      })
+    }).addTo(map);
   });
 });
