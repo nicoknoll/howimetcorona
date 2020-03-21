@@ -77,3 +77,13 @@ python manage.py runserver
 ```
 
 Now you can access the application on `http://localhost:8000`
+
+
+## Preview
+
+
+![Homepage](home.png)
+
+![Submit data](form.png)
+
+![Map](map.png)
