@@ -16,18 +16,24 @@ document.addEventListener("DOMContentLoaded", function() {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  const markers = L.markerClusterGroup();
+  const linePoints = points.map((point) => [point.lat, point.lng]);
+  const polyline = L.polyline(linePoints, {color: 'green'}).addTo(map);
+  map.fitBounds(polyline.getBounds());
 
-  points.forEach((point) => {
-    markers.addLayer(L.marker([point.lat, point.lng], {
-      icon: L.icon({
-        iconSize: [ 25, 41 ],
-        iconAnchor: [ 13, 41 ],
-        iconUrl: '/static/images/marker-icon.png',
-        shadowUrl: '/static/images/marker-shadow.png'
-      })
-    }));
+  /*
+  const markers = L.markerClusterGroup();
+    points.forEach((point) => {
+      markers.addLayer(L.marker([point.lat, point.lng], {
+        icon: L.icon({
+          iconSize: [ 25, 41 ],
+          iconAnchor: [ 13, 41 ],
+          iconUrl: '/static/images/marker-icon.png',
+          shadowUrl: '/static/images/marker-shadow.png'
+        })
+      }));
   });
 
   map.addLayer(markers);
+  */
+
 });
