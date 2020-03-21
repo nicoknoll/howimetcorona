@@ -1,11 +1,21 @@
 {% extends 'core/base.html' %}
 
 {% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock styles %}
 
 {% block head %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{% static 'scripts/truncate_file.js' %}"></script>
     <script src="{% static 'scripts/fileupload.js' %}"></script>
+      <script>
+          $( function() {
+            $( "#id_symptoms_at" ).datepicker({'dateFormat': 'yy-mm-dd', 'maxDate': '+0D'});
+
+          } );
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -21,6 +31,7 @@
                             {{ form.non_field_errors }}
                         </div>
                     {% endif %}
+
                     {% for field in form %}
                         {% if field.field.widget.input_type == 'file' %}
                             <label for="id_{{ field.name }}">
@@ -51,7 +62,11 @@
                                     {{ field.label_tag }}
                                 {% endif %}
 
-                                {{ field }}
+                                {% if field.name == 'symptoms_at' %}
+                                    <input type="text" id="id_{{ field.name }}" name="{{ field.name }}" size="30" placeholder="YYYY-MM-DD" autocomplete="off">
+                                {% else %}
+                                    {{ field }}
+                                {% endif %}
 
                                 {% if not field.is_hidden %}
                                     {{ field.errors }}
