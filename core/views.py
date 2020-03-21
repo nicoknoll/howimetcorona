@@ -151,7 +151,7 @@ def import_location_history(data, is_check=False):
 class ReportView(FormView):
     form_class = forms.ReportForm
     template_name = 'core/report_form.html'
-    success_url = reverse_lazy('core:home')
+    success_url = reverse_lazy('core:report-confirmation')
 
     @transaction.atomic
     def form_valid(self, form):
@@ -176,6 +176,11 @@ class ReportView(FormView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Report Infected Points'
         return context
+
+
+class ReportConfirmationView(TemplateView):
+    template_name = 'core/report_confirmation.html'
+
 
 class CheckView(FormView):
     form_class = forms.CheckForm

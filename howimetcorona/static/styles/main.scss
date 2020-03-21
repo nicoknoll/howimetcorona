@@ -9,9 +9,13 @@ html, body {
 }
 
 body {
-    color: #191919;
+    color: #252525;
     background: #f4f4f4;
     font-family: 'Lato', sans-serif;
+}
+
+p {
+    line-height: 1.5em;
 }
 
 
@@ -34,6 +38,7 @@ a {
     align-items: center;
     justify-content: center;
     z-index: 0;
+    text-align: center;
 
     a {
         text-decoration: none;
@@ -41,7 +46,11 @@ a {
 
     &__title {
         color: #4c9ad6;
-        margin: 10px;
+        margin: 20px 20px 10px 20px;
+
+        &--success {
+            color: #5D913B;
+        }
     }
 
     &:before {
@@ -94,6 +103,10 @@ a {
         width: 40px;
         height: 40px;
         border: 1px solid #88C9F9;
+    }
+
+    &--success {
+        border: 2px solid #77B255;
     }
 
     &__logo {
