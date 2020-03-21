@@ -1,16 +1,16 @@
-import json
-from decimal import Decimal
 from datetime import datetime
 import json
 
 from django.views.generic import TemplateView, FormView
 from django.db import transaction
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
 
 from .models import VisitedPoint
 from . import forms
 
 
+POINTS_SESSION_KEY = 'points'
 MAX_POINTS = 1000
 
 
@@ -144,15 +144,11 @@ def import_location_history(data):
 class ReportView(FormView):
     form_class = forms.ReportForm
     template_name = 'core/report_form.html'
-    success_url = reverse_lazy('core:map')
+    success_url = reverse_lazy('core:home')
 
     def _process_google_file(self, points_file):
         data = json.loads(points_file.read())
-
-        visited_points = import_location_history(data)
-
-        # return normalized data
-        return visited_points
+        return import_location_history(data)
 
     @transaction.atomic
     def form_valid(self, form):
@@ -175,8 +171,18 @@ class CheckView(FormView):
     template_name = 'core/check_form.html'
     success_url = reverse_lazy('core:map')
 
+    def _process_google_file(self, points_file):
+        data = json.loads(points_file.read())
+        return import_location_history(data)
+
     def form_valid(self, form):
         # compute risk on the fly
+        points = self._process_google_file(form.cleaned_data['points_file'])
+        self.request.session[POINTS_SESSION_KEY] = [{
+            'lat': float(point['lat']),
+            'lng': float(point['lng']),
+            'visited_at': str(point['visited_at']),
+        } for point in points]
 
         return super().form_valid(form)
 
@@ -184,10 +190,13 @@ class CheckView(FormView):
 class MapView(JsDataMixin, TemplateView):
     template_name = 'core/map.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        # map should only show results from check
+        if not request.session.get(POINTS_SESSION_KEY):
+            return HttpResponseRedirect(reverse('core:check'))
+
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request, *args, **kwargs):
-        self.add_data('points', [{
-            'lat': float(point.lat),
-            'lng': float(point.lng),
-            'visited_at': str(point.visited_at),
-        } for point in VisitedPoint.objects.order_by('-created_at')[:MAX_POINTS]])
+        self.add_data('points', self.request.session.get(POINTS_SESSION_KEY))
         return super().get(request, *args, **kwargs)

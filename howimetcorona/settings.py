@@ -22,6 +22,9 @@ DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = []
 
+# Store whole session data in cookie because privacy
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Application definition
 
