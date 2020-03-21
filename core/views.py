@@ -188,7 +188,6 @@ class CheckView(FormView):
             'visited_at': str(point['visited_at']),
         } for point in points]
 
-        risk_points = []
         filter = None
         for point in points:
             time_window = timedelta(minutes=20)
@@ -204,7 +203,7 @@ class CheckView(FormView):
                     lng__gt=point['lng'] - radius, lng__lt=point['lng'] + radius,
                     visited_at__gt=min_date, visited_at__lt=max_date)
         risk_points = list(VisitedPoint.objects.filter(filter))
-        self.request.session[POINTS_SESSION_KEY] = [{
+        self.request.session[RISK_SESSION_KEY] = [{
             'lat': float(point.lat),
             'lng': float(point.lng),
             'visited_at': str(point.visited_at),
@@ -218,7 +217,7 @@ class MapView(JsDataMixin, TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         # map should only show results from check
-        self._points = self.request.session.pop(POINTS_SESSION_KEY, [])
+        self._points = self.request.session.get(POINTS_SESSION_KEY, [])
         if not self._points:
             return HttpResponseRedirect(reverse('core:check'))
 
@@ -226,4 +225,5 @@ class MapView(JsDataMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         self.add_data('points', self._points)
+        self.add_data('riskPoints', self.request.session.get(RISK_SESSION_KEY))
         return super().get(request, *args, **kwargs)
