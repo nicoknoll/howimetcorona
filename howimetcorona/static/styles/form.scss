@@ -1,7 +1,8 @@
 .form {
-    margin-top: 30px;
+    margin: 30px 20px;
     padding: 20px;
-    width: 50%;
+    max-width: 500px;
+    width: 100%;
     box-shadow: 10px 10px 58px -24px rgba(0, 0, 0, 0.15);
 
     &__title {
