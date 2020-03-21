@@ -169,6 +169,10 @@ class ReportView(FormView):
 
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Report Infected Points'
+        return context
 
 class CheckView(FormView):
     form_class = forms.CheckForm
@@ -223,6 +227,11 @@ class CheckView(FormView):
         } for point in risk_points]
 
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Check Your Points'
+        return context
 
 
 class MapView(JsDataMixin, TemplateView):
