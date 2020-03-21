@@ -21,7 +21,9 @@
             <div class="menu">
                 {% if not hide_logo_menu %}
                     <div class="logo-container logo-container--small">
-                        <img src="{% static 'images/world_map.png' %}" class="logo-container__logo logo-container__logo--small" />
+                        <a href="{% url 'core:home' %}">
+                            <img src="{% static 'images/world_map.png' %}" class="logo-container__logo logo-container__logo--small" />
+                        </a>
                     </div>
                 {% endif %}
                 <a class="menu__item" href="{% url 'core:home' %}">Home</a>

@@ -3,7 +3,11 @@ from django import forms
 
 class BaseFileForm(forms.Form):
     # we try to minify the file to only submit the data
-    points_file = forms.FileField(required=False)
+    points_file = forms.FileField(
+        required=False,
+        widget=forms.FileInput(attrs={'required': 'required'}),
+        label="Location History File (.json)"
+    )
     points_data = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def clean(self):
