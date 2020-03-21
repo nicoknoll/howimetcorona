@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block content %}
+     <div class="logo-wrapper">
+        <div class="logo-container logo-container--success">
+            <img src="{% static 'images/thank_you.png' %}" class="logo-container__logo" />
+        </div>
+         <h3 class="logo-wrapper__title logo-wrapper__title--success">
+             Your data has been removed
+         </h3>
+         <p>You can re-upload your data at any time.</p>
+    </div>
+{% endblock content %}

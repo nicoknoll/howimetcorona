@@ -140,3 +140,14 @@ a {
 .map {
     height: calc(100% - 50px);
 }
+
+
+.footer {
+    padding: 50px 0;
+    text-align: center;
+    color: #ccc;
+
+    &__link {
+        color: #999;
+    }
+}

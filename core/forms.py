@@ -31,3 +31,7 @@ class ReportForm(BaseFileForm):
 
 class CheckForm(BaseFileForm):
     pass
+
+
+class DeleteForm(forms.Form):
+    delete_token = forms.CharField(label="Delete token")

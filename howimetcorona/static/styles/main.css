@@ -260,4 +260,13 @@ a {
   height: calc(100% - 50px);
 }
 
+.footer {
+  padding: 50px 0;
+  text-align: center;
+  color: #ccc;
+}
+.footer__link {
+  color: #999;
+}
+
 /*# sourceMappingURL=main.css.map */

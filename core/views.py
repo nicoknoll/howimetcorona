@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 import json
+import uuid
 
 from django.views.generic import TemplateView, FormView
 from django.db import transaction
@@ -16,7 +17,6 @@ RISK_SESSION_KEY = 'risk_points'
 MAX_POINTS = 1000
 LAT_METER = 0.000009
 LNG_METER = 0.0000146
-
 
 
 class JsDataMixin:
@@ -43,6 +43,7 @@ class HomeView(TemplateView):
 
 def import_google_coordinate(lat, lng):
     return lat*1e-7, lng*1e-7
+
 
 def import_timeline_objects(data):
     visited_points = []
@@ -151,7 +152,9 @@ def import_location_history(data, is_check=False):
 class ReportView(FormView):
     form_class = forms.ReportForm
     template_name = 'core/report_form.html'
-    success_url = reverse_lazy('core:report-confirmation')
+
+    def get_success_url(self):
+        return reverse('core:report-confirmation', args=(self.upload_id,))
 
     @transaction.atomic
     def form_valid(self, form):
@@ -160,6 +163,8 @@ class ReportView(FormView):
         if not raw_data:
             raw_data = form.cleaned_data['points_file'].read()
 
+        self.upload_id = str(uuid.uuid4())
+
         points = import_location_history(json.loads(raw_data))
         VisitedPoint.objects.bulk_create([
             VisitedPoint(
@@ -167,6 +172,7 @@ class ReportView(FormView):
                 lng=point['lng'],
                 visited_at=point['visited_at'],
                 is_verified=form.cleaned_data['is_verified'],
+                upload_id=self.upload_id,
             ) for point in points
         ])
 
@@ -260,3 +266,26 @@ class MapView(JsDataMixin, TemplateView):
         self.add_data('points', self._points)
         self.add_data('riskPoints', self.request.session.get(RISK_SESSION_KEY))
         return super().get(request, *args, **kwargs)
+
+
+class DeleteView(FormView):
+    form_class = forms.DeleteForm
+    template_name = 'core/delete_form.html'
+    success_url = reverse_lazy('core:delete-confirmation')
+
+    @transaction.atomic
+    def form_valid(self, form):
+        delete_token = form.cleaned_data.get('delete_token')
+        if delete_token:
+            VisitedPoint.objects.filter(upload_id=delete_token).delete()
+
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Delete Uploaded Data'
+        return context
+
+
+class DeleteConfirmationView(TemplateView):
+    template_name = 'core/delete_confirmation.html'

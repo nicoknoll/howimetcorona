@@ -30,6 +30,10 @@
             </div>
 
             {% block content %}{% endblock %}
+
+            <div class="footer">
+                <a class="footer__link" href="{% url 'core:delete' %}">Delete my data</a>&emsp;|&emsp;<a class="footer__link" href="https://nico.is/impressum/" target="_blank">Imprint</a>
+            </div>
         </div>
     </body>
 </html>
