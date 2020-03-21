@@ -160,21 +160,33 @@ class ReportView(FormView):
     def form_valid(self, form):
         # add points to db
         raw_data = form.cleaned_data['points_data']
+        first_symptoms_date = form.cleaned_data['symptoms_at']
+        first_symptoms_datetime = datetime(
+            year=first_symptoms_date.year,
+            month=first_symptoms_date.month,
+            day=first_symptoms_date.day,
+        )
+        infectious_datetime = first_symptoms_datetime - timedelta(days=2)
+
         if not raw_data:
             raw_data = form.cleaned_data['points_file'].read()
 
         self.upload_id = str(uuid.uuid4())
-
+        visited_points = []
         points = import_location_history(json.loads(raw_data))
-        VisitedPoint.objects.bulk_create([
-            VisitedPoint(
-                lat=point['lat'],
-                lng=point['lng'],
-                visited_at=point['visited_at'],
-                is_verified=form.cleaned_data['is_verified'],
-                upload_id=self.upload_id,
-            ) for point in points
-        ])
+        for point in points:
+            if infectious_datetime > point['visited_at']:
+                continue
+            visited_points.append(
+                VisitedPoint(
+                    lat=point['lat'],
+                    lng=point['lng'],
+                    visited_at=point['visited_at'],
+                    is_verified=form.cleaned_data['is_verified'],
+                    upload_id=self.upload_id,
+                )
+            )
+        VisitedPoint.objects.bulk_create(visited_points)
 
         return super().form_valid(form)
 
