@@ -21,9 +21,22 @@ document.addEventListener("DOMContentLoaded", function() {
   const polyline = L.polyline(linePoints, {color: 'green'}).addTo(map);
   map.fitBounds(polyline.getBounds());
 
+  const zeroPad = (num) => {
+    return ("0" + num).slice(-2);
+  };
+
   riskPoints.forEach((point) => {
+    const visitedAt = new Date(Date.parse(point.visited_at));
+    const dd = zeroPad(visitedAt.getDate());
+    const mm = zeroPad(visitedAt.getMonth() + 1);
+    const yyyy = visitedAt.getFullYear();
+    const hh = zeroPad(visitedAt.getHours());
+    const ii = zeroPad(visitedAt.getMinutes());
+
+    const label = `Date of contact: ${dd}.${mm}.${yyyy} ${hh}:${ii}`;
+
     L.circleMarker([point.lat, point.lng], {
       color: 'red'
-    }).addTo(map);
+    }).bindTooltip(label, {direction: 'top'}).addTo(map);
   });
 });
