@@ -16,14 +16,18 @@ document.addEventListener("DOMContentLoaded", function() {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
+  const markers = L.markerClusterGroup();
+
   points.forEach((point) => {
-    L.marker([point.lat, point.lng], {
+    markers.addLayer(L.marker([point.lat, point.lng], {
       icon: L.icon({
         iconSize: [ 25, 41 ],
         iconAnchor: [ 13, 41 ],
         iconUrl: '/static/images/marker-icon.png',
         shadowUrl: '/static/images/marker-shadow.png'
       })
-    }).addTo(map);
+    }));
   });
+
+  map.addLayer(markers);
 });

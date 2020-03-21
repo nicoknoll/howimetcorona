@@ -1,5 +1,11 @@
 {% extends 'core/base.html' %}
 
+{% load static %}
+
+{% block head %}
+    <script src="{% static 'scripts/truncate_file.js' %}"></script>
+{% endblock %}
+
 {% block content %}
     <form class="form{% if not form.visible_fields %} form--hidden{% endif %}" method="post" enctype="multipart/form-data">
         <div class="django-form">

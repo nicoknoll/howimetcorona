@@ -11,7 +11,7 @@ from .models import VisitedPoint
 from . import forms
 
 
-MAX_POINTS = 100
+MAX_POINTS = 1000
 
 
 class JsDataMixin:
