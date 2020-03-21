@@ -1,2 +1,2 @@
 release: python manage.py migrate --noinput
-web: gunicorn howimetcorona.wsgi --log-file -
+web: gunicorn howimetcorona.wsgi --log-file=-
