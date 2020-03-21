@@ -182,7 +182,7 @@ class CheckView(FormView):
             'lat': float(point['lat']),
             'lng': float(point['lng']),
             'visited_at': str(point['visited_at']),
-        } for point in points[:100]]
+        } for point in points]
 
         return super().form_valid(form)
 
