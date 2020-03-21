@@ -3,7 +3,7 @@ https://howimetcorona.herokuapp.com/
 
 Did I have contact with an infected person in the last two weeks? "How I met Corona" uses existing data to get a little closer to the answer. 
 
-![Header](header.png)
+![Header](https://raw.githubusercontent.com/nicoknoll/howimetcorona/master/docs/header.png)
 
 ## Introduction
 
@@ -84,8 +84,15 @@ Now you can access the application on `http://localhost:8000`
 ## Preview
 
 
-![Homepage](home.png?v2)
+![Homepage](https://raw.githubusercontent.com/nicoknoll/howimetcorona/master/docs/home.png)
 
-![Submit data](form.png?v2)
+![Submit data](https://raw.githubusercontent.com/nicoknoll/howimetcorona/master/docs/form.png)
 
-![Map](map.png)
+![Map](https://raw.githubusercontent.com/nicoknoll/howimetcorona/master/docs/map.png)
+
+
+## The team
+
+<a href="https://github.com/nicoknoll/howimetcorona/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=nicoknoll/howimetcorona" />
+</a>
