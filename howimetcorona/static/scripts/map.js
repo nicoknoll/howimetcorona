@@ -22,30 +22,8 @@ document.addEventListener("DOMContentLoaded", function() {
   map.fitBounds(polyline.getBounds());
 
   riskPoints.forEach((point) => {
-    L.marker([point.lat, point.lng], {
-      icon: L.icon({
-        iconSize: [25, 41],
-        iconAnchor: [13, 41],
-        iconUrl: '/static/images/marker-icon.png',
-        shadowUrl: '/static/images/marker-shadow.png'
-      })
+    L.circleMarker([point.lat, point.lng], {
+      color: 'red'
     }).addTo(map);
   });
-
-  /*
-  const markers = L.markerClusterGroup();
-    points.forEach((point) => {
-      markers.addLayer(L.marker([point.lat, point.lng], {
-        icon: L.icon({
-          iconSize: [ 25, 41 ],
-          iconAnchor: [ 13, 41 ],
-          iconUrl: '/static/images/marker-icon.png',
-          shadowUrl: '/static/images/marker-shadow.png'
-        })
-      }));
-  });
-
-  map.addLayer(markers);
-  */
-
 });
