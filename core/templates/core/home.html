@@ -4,14 +4,14 @@
 {% block content %}
     <div class="logo-wrapper">
         <div class="logo-container">
-            <img src="{% static 'images/world_map.png' %}" width="200" class="logo-container__logo" />
+            <img src="{% static 'images/world_map.png' %}" class="logo-container__logo" />
         </div>
-        <h4 class="logo-wrapper__title">How I Met Corona</h4>
+        <a href="{% url 'core:home' %}">
+            <h4 class="logo-wrapper__title">How I Met Corona</h4>
+        </a>
     </div>
     <div class="home__cta">
         <a href="{% url 'core:report' %}" class="btn">Report infected points</a>
         <a href="{% url 'core:check' %}" class="btn">Check your points</a>
     </div>
-
-
 {% endblock %}

@@ -5,7 +5,7 @@
         <title>How I met Corona</title>
         <link rel="stylesheet" href="{% static 'styles/main.css' %}">
         <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
-        <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
         {% if js_data %}
@@ -18,7 +18,15 @@
     </head>
     <body>
         <div class="wrapper">
-            <div><a href="{% url 'core:home' %}">Home</a></div>
+            <div class="menu">
+                {% if not hide_logo_menu %}
+                    <div class="logo-container logo-container--small">
+                        <img src="{% static 'images/world_map.png' %}" class="logo-container__logo logo-container__logo--small" />
+                    </div>
+                {% endif %}
+                <a class="menu__item" href="{% url 'core:home' %}">Home</a>
+            </div>
+
             {% block content %}{% endblock %}
         </div>
     </body>
