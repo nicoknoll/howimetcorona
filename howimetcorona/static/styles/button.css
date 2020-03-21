@@ -1,0 +1,30 @@
+.button {
+  background-color: #74AF5B;
+  color: white;
+  min-width: 210px;
+  text-align: center;
+  outline: none;
+  padding: 12px 0px;
+  border-radius: 10px;
+  text-decoration: none;
+  margin: 10px 15px;
+  transition: background-color 0.25s;
+  font-size: 15px;
+  border: 0px;
+}
+.button:hover {
+  background-color: #5D913B;
+  cursor: pointer;
+}
+.button--form {
+  background-color: #55ACEE;
+  float: right;
+  margin: 0px;
+  min-width: auto;
+  padding: 12px 20px;
+}
+.button--form:hover {
+  background-color: #4c9ad6;
+}
+
+/*# sourceMappingURL=button.css.map */
