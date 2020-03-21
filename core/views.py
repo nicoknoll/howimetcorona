@@ -1,16 +1,18 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 
 from django.views.generic import TemplateView, FormView
 from django.db import transaction
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 from .models import VisitedPoint
 from . import forms
 
 
 POINTS_SESSION_KEY = 'points'
+RISK_SESSION_KEY = 'risk_points'
 MAX_POINTS = 1000
 
 
@@ -125,18 +127,20 @@ def import_timeline_objects(data):
     return visited_points
 
 
-def import_location_history(data):
+def import_location_history(data, is_check=False):
     visited_points = []
     locations = data['locations']
 
     for location in locations:
         lat, lng = import_google_coordinate(location['latitudeE7'], location['longitudeE7'])
-
-        visited_points.append({
+        visited_point = {
             'lat': lat,
             'lng': lng,
             'visited_at': datetime.fromtimestamp(int(location['timestampMs'])/1000)
-        })
+        }
+        if is_check:
+            visited_point['accuracy'] = location['accuracy']
+        visited_points.append(visited_point)
 
     return visited_points
 
@@ -177,12 +181,33 @@ class CheckView(FormView):
         if not raw_data:
             raw_data = form.cleaned_data['points_file'].read()
 
-        points = import_location_history(json.loads(raw_data))
+        points = import_location_history(json.loads(raw_data), is_check=True)
         self.request.session[POINTS_SESSION_KEY] = [{
             'lat': float(point['lat']),
             'lng': float(point['lng']),
             'visited_at': str(point['visited_at']),
-        } for point in points[:100]]
+        } for point in points]
+
+        filter = None
+        for point in points:
+            time_window = timedelta(minutes=20)
+            min_date = point['visited_at'] - time_window
+            max_date = point['visited_at'] + time_window
+            radius = 2e-3
+            if filter is None:
+                filter = Q(lat__gt=point['lat'] - radius, lat__lt=point['lat'] + radius,
+                    lng__gt=point['lng'] - radius, lng__lt=point['lng'] + radius,
+                    visited_at__gt=min_date, visited_at__lt=max_date)
+            else:
+                filter |= Q(lat__gt=point['lat'] - radius, lat__lt=point['lat'] + radius,
+                    lng__gt=point['lng'] - radius, lng__lt=point['lng'] + radius,
+                    visited_at__gt=min_date, visited_at__lt=max_date)
+        risk_points = list(VisitedPoint.objects.filter(filter))
+        self.request.session[RISK_SESSION_KEY] = [{
+            'lat': float(point.lat),
+            'lng': float(point.lng),
+            'visited_at': str(point.visited_at),
+        } for point in risk_points]
 
         return super().form_valid(form)
 
@@ -192,7 +217,7 @@ class MapView(JsDataMixin, TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         # map should only show results from check
-        self._points = self.request.session.pop(POINTS_SESSION_KEY, [])
+        self._points = self.request.session.get(POINTS_SESSION_KEY, [])
         if not self._points:
             return HttpResponseRedirect(reverse('core:check'))
 
@@ -200,4 +225,5 @@ class MapView(JsDataMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         self.add_data('points', self._points)
+        self.add_data('riskPoints', self.request.session.get(RISK_SESSION_KEY))
         return super().get(request, *args, **kwargs)

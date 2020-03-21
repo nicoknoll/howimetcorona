@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
   const points = window.data.points || [];
+  const riskPoints = window.data.riskPoints || [];
 
   // Moabit
   let initialLat = 52.52635;
@@ -19,6 +20,17 @@ document.addEventListener("DOMContentLoaded", function() {
   const linePoints = points.map((point) => [point.lat, point.lng]);
   const polyline = L.polyline(linePoints, {color: 'green'}).addTo(map);
   map.fitBounds(polyline.getBounds());
+
+  riskPoints.forEach((point) => {
+    L.marker([point.lat, point.lng], {
+      icon: L.icon({
+        iconSize: [25, 41],
+        iconAnchor: [13, 41],
+        iconUrl: '/static/images/marker-icon.png',
+        shadowUrl: '/static/images/marker-shadow.png'
+      })
+    }).addTo(map);
+  });
 
   /*
   const markers = L.markerClusterGroup();

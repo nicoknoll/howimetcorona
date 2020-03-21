@@ -21,27 +21,33 @@ document.addEventListener("DOMContentLoaded", function() {
         // prevent file upload
         form.querySelector('[name=points_file]').value = '';
         form.submit();
+      }, (error) => {
+        alert(error);
       });
     });
 
     function truncatePointsFile(file, onSuccess, onError) {
-      let reader = new FileReader();
-      reader.readAsText(file);
+      try {
+        let reader = new FileReader();
+        reader.readAsText(file);
 
-      reader.onload = function () {
-        const fromTimestamp = Date.now() - MAX_DAYS * 24 * 60 * 60 * 1000;
+        reader.onload = function () {
+          const fromTimestamp = Date.now() - MAX_DAYS * 24 * 60 * 60 * 1000;
 
-        let locations = JSON.parse(reader.result)['locations'];
-        locations = locations.filter((visitedPoint) => {
-          return parseInt(visitedPoint.timestampMs) >= fromTimestamp;
-        });
+          let locations = JSON.parse(reader.result)['locations'];
+          locations = locations.filter((visitedPoint) => {
+            return parseInt(visitedPoint.timestampMs) >= fromTimestamp;
+          });
 
-        onSuccess(JSON.stringify({'locations': locations}));
-      };
+          onSuccess(JSON.stringify({'locations': locations}));
+        };
 
-      reader.onerror = function () {
-        onError(reader.error);
-      };
+        reader.onerror = function () {
+          onError(reader.error);
+        };
+      } catch (e) {
+        onError(e);
+      }
     }
   }
 });
