@@ -3,47 +3,79 @@
 {% load static %}
 
 {% block head %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="{% static 'scripts/truncate_file.js' %}"></script>
+    <script src="{% static 'scripts/fileupload.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'styles/form.css' %}">
 {% endblock %}
 
 {% block content %}
-    <form class="form{% if not form.visible_fields %} form--hidden{% endif %}" method="post" enctype="multipart/form-data">
-        <div class="django-form">
-            <div class="form__fields">
-                {% if form.non_field_errors %}
-                    <div class="form__field form__field--error">
-                        {{ form.non_field_errors }}
-                    </div>
-                {% endif %}
+    <div class="form__wrapper">
+        <form class="form{% if not form.visible_fields %} form--hidden{% endif %}" method="post"
+              enctype="multipart/form-data">
+            <h3 class="form__title">{{ title }}</h3>
 
-                {% for field in form %}
-                <div class="form__field{% if field.errors %} form__field--error{% endif %}{% if field.is_hidden %} form__field--hidden{% endif %}{% if field.field.required %} form__field--required{% endif %}">
-                    {% if not field.is_hidden %}
-                        {{ field.label_tag }}
+            <div class="django-form">
+                <div class="form__fields">
+                    {% if form.non_field_errors %}
+                        <div class="form__field form__field--error">
+                            {{ form.non_field_errors }}
+                        </div>
                     {% endif %}
+                    {% for field in form %}
+                        {% if field.field.widget.input_type == 'file' %}
+                            <label for="id_{{ field.name }}">
+                                {{ field.label }}
+                                <a class="file-info" href="https://takeout.google.com/settings/takeout/custom/location_history" target="_blank">
+                                    Where can I find my Location History?
+                                </a>
+                            </label>
 
-                    {{ field }}
+                            <div class="file-upload">
+                                <div class="file-upload-wrap">
+                                    <input class="file-upload-input" required id="id_{{ field.name }}" name="{{ field.name }}" type="file" onchange="readURL(this);"/>
+                                    <div class="drag-text">
+                                        Drag and drop a file
+                                    </div>
+                                </div>
+                                <div class="file-upload-content">
+                                    <div class="file-title-wrap">
+                                        <span class="file-title">Uploaded File</span>
+                                        <button type="button" onclick="removeUpload()" class="remove-file">Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="form__field{% if field.errors %} form__field--error{% endif %}{% if field.is_hidden %} form__field--hidden{% endif %}{% if field.field.required %} form__field--required{% endif %}">
+                                {% if not field.is_hidden %}
+                                    {{ field.label_tag }}
+                                {% endif %}
 
-                    {% if not field.is_hidden %}
-                        {{ field.errors }}
-                    {% endif %}
+                                {{ field }}
 
-                    {% if not field.is_hidden and field.help_text %}
-                    <div class="field__note">
-                        {{ field.help_text }}
-                    </div>
-                    {% endif %}
+                                {% if not field.is_hidden %}
+                                    {{ field.errors }}
+                                {% endif %}
+
+                                {% if not field.is_hidden and field.help_text %}
+                                    <div class="field__note">
+                                        {{ field.help_text }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
-        </div>
 
-        {% csrf_token %}
+            {% csrf_token %}
 
-        <div class="button-bar">
-            {% block form_buttons %}
-                <input class="button" type="submit" name="_submit" value="Submit">
-            {% endblock %}
-        </div>
-    </form>
+            <div class="button-bar">
+                {% block form_buttons %}
+                    <input class="button button--form" type="submit" name="_submit" value="Submit">
+                {% endblock %}
+            </div>
+        </form>
+    </div>
 {% endblock %}

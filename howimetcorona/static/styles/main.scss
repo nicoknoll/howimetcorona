@@ -1,9 +1,12 @@
+@import 'form';
+@import 'button';
+
+
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
 }
-
 
 body {
     color: #191919;
@@ -12,13 +15,16 @@ body {
 }
 
 
+a {
+    text-decoration: none;
+    color: #55ACEE;
+}
+
 .wrapper {
     height: 100%;
     z-index: 0;
     position: relative;
-
 }
-
 
 .logo-wrapper {
     width: 100%;
@@ -48,7 +54,6 @@ body {
         background-color: white;
         border-bottom: 1px solid #eeeeee;
         box-shadow: 10px 10px 58px -24px rgba(0,0,0,0.15);
-
     }
 }
 
@@ -93,7 +98,7 @@ body {
 
     &__logo {
         width: 120px;
-        transition: width 0.4s ease-in;
+        transition: width 0.2s ease-in;
 
         &:hover {
             width: 135px;
@@ -109,7 +114,6 @@ body {
     }
 }
 
-
 .home {
     &__cta {
         margin-top: 50px;
@@ -119,25 +123,6 @@ body {
         flex-wrap: wrap;
     }
 }
-
-
-.btn {
-    background-color: #74AF5B;
-    color: white;
-    min-width: 210px;
-    text-align: center;
-    outline: none;
-    padding: 12px 0px;
-    border-radius: 10px;
-    text-decoration: none;
-    margin: 10px 15px;
-    transition: background-color 0.25s;
-
-    &:hover {
-        background-color: #5D913B;
-    }
-}
-
 
 .map {
     height: calc(100% - 50px);
