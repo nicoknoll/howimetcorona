@@ -22,9 +22,8 @@ DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = []
 
-# Store whole session data in cookie because privacy
-SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# Store whole session data in cookie because privacy#
+SESSION_COOKIE_HTTPONLY = True
 
 # Force secure SSL on production
 if not DEBUG:
@@ -32,6 +31,7 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = True
+
 
 # Application definition
 

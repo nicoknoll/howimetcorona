@@ -146,14 +146,14 @@ class ReportView(FormView):
     template_name = 'core/report_form.html'
     success_url = reverse_lazy('core:home')
 
-    def _process_google_file(self, points_file):
-        data = json.loads(points_file.read())
-        return import_location_history(data)
-
     @transaction.atomic
     def form_valid(self, form):
         # add points to db
-        points = self._process_google_file(form.cleaned_data['points_file'])
+        raw_data = form.cleaned_data['points_data']
+        if not raw_data:
+            raw_data = form.cleaned_data['points_file'].read()
+
+        points = import_location_history(json.loads(raw_data))
         VisitedPoint.objects.bulk_create([
             VisitedPoint(
                 lat=point['lat'],
@@ -171,18 +171,18 @@ class CheckView(FormView):
     template_name = 'core/check_form.html'
     success_url = reverse_lazy('core:map')
 
-    def _process_google_file(self, points_file):
-        data = json.loads(points_file.read())
-        return import_location_history(data)
-
     def form_valid(self, form):
         # compute risk on the fly
-        points = self._process_google_file(form.cleaned_data['points_file'])
+        raw_data = form.cleaned_data['points_data']
+        if not raw_data:
+            raw_data = form.cleaned_data['points_file'].read()
+
+        points = import_location_history(json.loads(raw_data))
         self.request.session[POINTS_SESSION_KEY] = [{
             'lat': float(point['lat']),
             'lng': float(point['lng']),
             'visited_at': str(point['visited_at']),
-        } for point in points]
+        } for point in points[:100]]
 
         return super().form_valid(form)
 
@@ -192,11 +192,12 @@ class MapView(JsDataMixin, TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         # map should only show results from check
-        if not request.session.get(POINTS_SESSION_KEY):
+        self._points = self.request.session.pop(POINTS_SESSION_KEY, [])
+        if not self._points:
             return HttpResponseRedirect(reverse('core:check'))
 
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        self.add_data('points', self.request.session.get(POINTS_SESSION_KEY))
+        self.add_data('points', self._points)
         return super().get(request, *args, **kwargs)

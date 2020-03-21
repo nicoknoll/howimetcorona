@@ -1,29 +1,26 @@
 document.addEventListener("DOMContentLoaded", function() {
   const MAX_DAYS = 14;
 
+  /*
+  If FileReader API is supported we read the file content, truncate it to only
+  include MAX_DAYS of data, put the results into a hidden field and remove the
+  original file field so the file doesn't get uploaded.
+
+  If not the view can also work with just the data.
+  */
   if (window.File && window.FileReader && window.FileList && window.Blob) {
     document.querySelector('form').addEventListener('submit', (e) => {
       e.preventDefault();
+
+      const form = e.target;
       const formData = new FormData(e.target);
 
-      // replace original file
       const pointsFile = formData.get('points_file');
-      truncatePointsFile(pointsFile, (truncatedFile) => {
-        formData.set('points_file', truncatedFile, 'points.json');
-        const xhr = new XMLHttpRequest();
-
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-              window.location = xhr.responseURL;
-            } else {
-              alert(xhr.statusText);
-            }
-          }
-        };
-
-        xhr.open(e.target.method, e.target.action);
-        xhr.send(formData);
+      truncatePointsFile(pointsFile, (truncatedFileData) => {
+        form.querySelector('[name=points_data]').value = truncatedFileData;
+        // prevent file upload
+        form.querySelector('[name=points_file]').value = '';
+        form.submit();
       });
     });
 
@@ -39,10 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
           return parseInt(visitedPoint.timestampMs) >= fromTimestamp;
         });
 
-        onSuccess(new Blob(
-            [JSON.stringify({'locations': locations})],
-            {type: "application/json"}
-        ));
+        onSuccess(JSON.stringify({'locations': locations}));
       };
 
       reader.onerror = function () {
