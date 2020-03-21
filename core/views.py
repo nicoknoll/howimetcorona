@@ -14,6 +14,9 @@ from . import forms
 POINTS_SESSION_KEY = 'points'
 RISK_SESSION_KEY = 'risk_points'
 MAX_POINTS = 1000
+LAT_METER = 0.000009
+LNG_METER = 0.0000146
+
 
 
 class JsDataMixin:
@@ -193,33 +196,36 @@ class CheckView(FormView):
         } for point in points]
 
         filters = None
-        radius = 2e-3
         time_window = timedelta(minutes=20)
 
         for point in points:
             min_date = point['visited_at'] - time_window
             max_date = point['visited_at'] + time_window
 
+            lat_radius = 20 * LAT_METER
+            lng_radius = 20 * LNG_METER
+
             if filters is None:
                 filters = Q(
-                    lat__gt=point['lat'] - radius,
-                    lat__lt=point['lat'] + radius,
-                    lng__gt=point['lng'] - radius,
-                    lng__lt=point['lng'] + radius,
+                    lat__gt=point['lat'] - lat_radius,
+                    lat__lt=point['lat'] + lat_radius,
+                    lng__gt=point['lng'] - lng_radius,
+                    lng__lt=point['lng'] + lng_radius,
                     visited_at__gt=min_date,
                     visited_at__lt=max_date
                 )
             else:
                 filters |= Q(
-                    lat__gt=point['lat'] - radius,
-                    lat__lt=point['lat'] + radius,
-                    lng__gt=point['lng'] - radius,
-                    lng__lt=point['lng'] + radius,
+                    lat__gt=point['lat'] - lat_radius,
+                    lat__lt=point['lat'] + lat_radius,
+                    lng__gt=point['lng'] - lng_radius,
+                    lng__lt=point['lng'] + lng_radius,
                     visited_at__gt=min_date,
                     visited_at__lt=max_date
                 )
 
         risk_points = list(VisitedPoint.objects.filter(filters))
+
         self.request.session[RISK_SESSION_KEY] = [{
             'lat': float(point.lat),
             'lng': float(point.lng),
