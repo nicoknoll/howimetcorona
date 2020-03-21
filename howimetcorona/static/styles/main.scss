@@ -68,6 +68,7 @@ a {
 
 .menu {
     padding: 20px;
+    height:40px;
     background-color: white;
     display: flex;
     align-items: center;
@@ -75,7 +76,7 @@ a {
     &__item {
         color: #55ACEE;
         font-weight: bold;
-        margin: 0px 15px;
+        margin: 0 15px;
         text-decoration: none;
         padding-bottom: 5px;
         border-bottom: 2px solid rgba(136, 201, 249, 0.5);
@@ -138,7 +139,7 @@ a {
 }
 
 .map {
-    height: calc(100% - 50px);
+    height: calc(100% - 80px);
 }
 
 
