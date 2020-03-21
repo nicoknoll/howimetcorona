@@ -89,3 +89,10 @@ Now you can access the application on `http://localhost:8000`
 ![Submit data](form.png?v2)
 
 ![Map](map.png)
+
+
+## The team
+
+<a href="https://github.com/nicoknoll/howimetcorona/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=nicoknoll/howimetcorona" />
+</a>
