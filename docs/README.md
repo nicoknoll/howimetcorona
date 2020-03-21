@@ -1,7 +1,7 @@
 # How I met Corona
 https://howimetcorona.herokuapp.com/
 
-Did I have contact with an infected person in the last two weeks? "How I met corona" uses existing data to get a little closer to the answer. 
+Did I have contact with an infected person in the last two weeks? "How I met Corona" uses existing data to get a little closer to the answer. 
 
 ![Header](header.png)
 
