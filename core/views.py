@@ -10,6 +10,9 @@ from .models import VisitedPoint
 from . import forms
 
 
+MAX_POINTS = 100
+
+
 class JsDataMixin:
     def __init__(self):
         self._js_data = {}
@@ -83,5 +86,5 @@ class MapView(JsDataMixin, TemplateView):
             'lat': float(point.lat),
             'lng': float(point.lng),
             'visited_at': str(point.visited_at),
-        } for point in VisitedPoint.objects.all()])
+        } for point in VisitedPoint.objects.order_by('-created_at')[:MAX_POINTS]])
         return super().get(request, *args, **kwargs)
