@@ -5,48 +5,59 @@
     {{ block.super }}
 
     <script>
-        if (window.File && window.FileReader && window.FileList && window.Blob) {
-            // Great success! All the File APIs are supported.
-          console.log('YESSSS');
-        } else {
-            alert('The File APIs are not fully supported in this browser.');
+      if (window.File && window.FileReader && window.FileList && window.Blob) {
+        document.querySelector('form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+
+          const pointsFile = formData.get('points_file');
+          formData.delete('points_file');
+
+          truncatePointsFile(pointsFile, (truncatedFile) => {
+            formData.append('points_file', truncatedFile, 'points.json');
+            const xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function () {
+
+              if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                  window.location = xhr.responseURL;
+                } else {
+                  alert(xhr.statusText);
+                }
+              }
+            };
+
+            xhr.open(e.target.method, e.target.action);
+            xhr.send(formData);
+          });
+        });
+
+        function truncatePointsFile(file, onSuccess, onError) {
+          let reader = new FileReader();
+          reader.readAsText(file);
+
+          reader.onload = function () {
+            // 14 Tage daten in ms
+            const fromTimestamp = Date.now() - 14 * 24 * 60 * 60 * 1000;
+
+            let locations = JSON.parse(reader.result)['locations'];
+            locations = locations.filter((visitedPoint) => {
+              return parseInt(visitedPoint.timestampMs) >= fromTimestamp;
+            });
+
+            onSuccess(new Blob(
+                [JSON.stringify({'locations': locations})],
+                {type: "application/json"}
+            ));
+          };
+
+          reader.onerror = function () {
+            onError(reader.error);
+          };
         }
+      }
     </script>
-
-<input type="file" onchange="readFile(this)">
-
-<script>
-  function readFile(input /*, onSuccess, onError*/) {
-    let file = input.files[0];
-
-    let reader = new FileReader();
-
-    reader.readAsText(file);
-
-    reader.onload = function() {
-      const fromTimestamp = Date.now() - 14 * 24 * 60 * 60 * 1000;  // 14 Tage daten in ms
-
-      let locations = JSON.parse(reader.result)['locations'];
-      locations = locations.filter((visitedPoint) => {
-        return parseInt(visitedPoint.timestampMs) >= fromTimestamp;
-      });
-
-      /*
-      const blob = new Blob(
-          [JSON.stringify({'locations': locations})],
-          {type: "application/json"}
-      );
-        */
-      //onSuccess()
-      console.log(locations);
-    };
-
-    reader.onerror = function() {
-      //onError(reader.error);
-    };
-
-  }
-</script>
 
 
 {% endblock %}
