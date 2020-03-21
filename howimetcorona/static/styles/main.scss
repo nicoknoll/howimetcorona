@@ -14,6 +14,9 @@ body {
 
 .wrapper {
     height: 100%;
+    z-index: 0;
+    position: relative;
+
 }
 
 
@@ -24,10 +27,50 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: 0;
+
+    a {
+        text-decoration: none;
+    }
 
     &__title {
         color: #4c9ad6;
         margin: 10px;
+    }
+
+    &:before {
+        position: absolute;
+        top: 0px;
+        height: 150px;
+        content: '';
+        z-index: -1;
+        width: 100%;
+        background-color: white;
+        border-bottom: 1px solid #eeeeee;
+        box-shadow: 10px 10px 58px -24px rgba(0,0,0,0.15);
+
+    }
+}
+
+.menu {
+    padding: 20px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+
+    &__item {
+        color: #55ACEE;
+        font-weight: bold;
+        margin: 0px 15px;
+        text-decoration: none;
+        padding-bottom: 5px;
+        border-bottom: 2px solid rgba(136, 201, 249, 0.5);
+        transition: border 0.25s;
+
+        &:hover {
+            color: #4c9ad6;
+            border-bottom: 2px solid rgba(136, 201, 249, 1);
+        }
     }
 }
 
@@ -42,12 +85,26 @@ body {
     align-items: center;
     justify-content: center;
 
+    &--small {
+        width: 40px;
+        height: 40px;
+        border: 1px solid #88C9F9;
+    }
+
     &__logo {
         width: 120px;
-        transition: width 0.25s;
+        transition: width 0.4s ease-in;
 
         &:hover {
             width: 135px;
+        }
+
+        &--small {
+            width: 30px;
+
+            &:hover {
+                width: 30px;
+            }
         }
     }
 }
