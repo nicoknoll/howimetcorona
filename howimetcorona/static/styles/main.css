@@ -256,6 +256,9 @@ a {
   justify-content: center;
   flex-wrap: wrap;
 }
+.home__intro {
+  text-align: center;
+}
 
 .map {
   height: calc(100% - 80px);

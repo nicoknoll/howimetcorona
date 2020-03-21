@@ -136,7 +136,13 @@ a {
         justify-content: center;
         flex-wrap: wrap;
     }
+
+    &__intro {
+        text-align: center;
+    }
 }
+
+
 
 .map {
     height: calc(100% - 80px);

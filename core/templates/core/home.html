@@ -2,16 +2,32 @@
 {% load static %}
 
 {% block content %}
-    <div class="logo-wrapper">
-        <div class="logo-container">
-            <img src="{% static 'images/world_map.png' %}" class="logo-container__logo" />
+    <div class="home">
+        <div class="logo-wrapper">
+            <div class="logo-container">
+                <img src="{% static 'images/world_map.png' %}" class="logo-container__logo" />
+            </div>
+            <a href="{% url 'core:home' %}">
+                <h4 class="logo-wrapper__title">How I Met Corona</h4>
+            </a>
         </div>
-        <a href="{% url 'core:home' %}">
-            <h4 class="logo-wrapper__title">How I Met Corona</h4>
-        </a>
-    </div>
-    <div class="home__cta">
-        <a href="{% url 'core:report' %}" class="button">Report infected points</a>
-        <a href="{% url 'core:check' %}" class="button">Check your points</a>
+
+        <div class="home__intro">
+            <p>
+                <b>Did I have contact with an infected person in the last two weeks? <br>
+                    "How I met Corona" uses existing data to get a little closer to the answer.</b>
+            </p>
+
+            <p>
+                If you got infected with the corona virus you can anonymously upload <br>
+                your last 14 days of location data points here. Other people can then<br>
+                compare their data to see if your paths crossed at any point in time.
+            </p>
+        </div>
+
+        <div class="home__cta">
+            <a href="{% url 'core:report' %}" class="button">Report infected points</a>
+            <a href="{% url 'core:check' %}" class="button">Check your points</a>
+        </div>
     </div>
 {% endblock %}
