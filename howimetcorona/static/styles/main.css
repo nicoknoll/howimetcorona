@@ -21,6 +21,8 @@
   margin-bottom: 20px;
 }
 .form__field input {
+  border: 1px solid #dddddd;
+  border-radius: 2px;
   width: 100%;
   padding: 10px;
   outline: none;

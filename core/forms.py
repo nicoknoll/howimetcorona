@@ -21,7 +21,11 @@ class BaseFileForm(forms.Form):
 
 
 class ReportForm(BaseFileForm):
-    infected_at = forms.DateField(widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD'}))
+    infected_at = forms.DateField(widget=forms.TextInput(attrs={
+        'placeholder': 'YYYY-MM-DD',
+        'pattern': '[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}',
+        'title': 'YYYY-MM-DD'
+    }))
     is_verified = forms.BooleanField(required=False)
 
 
