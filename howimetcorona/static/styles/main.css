@@ -142,9 +142,13 @@ html, body {
 }
 
 body {
-  color: #191919;
+  color: #252525;
   background: #f4f4f4;
   font-family: "Lato", sans-serif;
+}
+
+p {
+  line-height: 1.5em;
 }
 
 a {
@@ -166,13 +170,17 @@ a {
   align-items: center;
   justify-content: center;
   z-index: 0;
+  text-align: center;
 }
 .logo-wrapper a {
   text-decoration: none;
 }
 .logo-wrapper__title {
   color: #4c9ad6;
-  margin: 10px;
+  margin: 20px 20px 10px 20px;
+}
+.logo-wrapper__title--success {
+  color: #5D913B;
 }
 .logo-wrapper:before {
   position: absolute;
@@ -220,6 +228,9 @@ a {
   width: 40px;
   height: 40px;
   border: 1px solid #88C9F9;
+}
+.logo-container--success {
+  border: 2px solid #77B255;
 }
 .logo-container__logo {
   width: 120px;

@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block content %}
+     <div class="logo-wrapper">
+        <div class="logo-container logo-container--success">
+            <img src="{% static 'images/thank_you.png' %}" class="logo-container__logo" />
+        </div>
+         <h3 class="logo-wrapper__title logo-wrapper__title--success">
+             Thank You
+         </h3>
+         <p>
+             We really appreciate that you shared your information. <br>
+             We hope you'll get better soon!
+         </p>
+    </div>
+
+{% endblock content %}
