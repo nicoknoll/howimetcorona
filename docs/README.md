@@ -1,7 +1,7 @@
 # How I met Corona
 https://howimetcorona.herokuapp.com/
 
-Have I had contact with an infected person in the last two weeks? "How I met corona" uses existing data to get a little closer to the answer. 
+Did I have contact with an infected person in the last two weeks? "How I met corona" uses existing data to get a little closer to the answer. 
 
 ![Header](header.png)
 
@@ -84,8 +84,8 @@ Now you can access the application on `http://localhost:8000`
 ## Preview
 
 
-![Homepage](home.png)
+![Homepage](home.png?v2)
 
-![Submit data](form.png)
+![Submit data](form.png?v2)
 
 ![Map](map.png)
