@@ -9,13 +9,8 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{% static 'scripts/truncate_file.js' %}"></script>
+    <script src="{% static 'scripts/datepicker.js' %}"></script>
     <script src="{% static 'scripts/fileupload.js' %}"></script>
-      <script>
-          $( function() {
-            $( "#id_symptoms_at" ).datepicker({'dateFormat': 'yy-mm-dd', 'maxDate': '+0D'});
-
-          } );
-    </script>
 {% endblock %}
 
 {% block content %}

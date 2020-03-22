@@ -142,13 +142,11 @@ a {
     }
 }
 
-
 .messages {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 
 .message {
     margin: 30px 20px;
@@ -164,11 +162,9 @@ a {
     }
 }
 
-
 .map {
     height: calc(100% - 80px);
 }
-
 
 .footer {
     padding: 50px 0;
@@ -177,5 +173,28 @@ a {
 
     &__link {
         color: #999;
+    }
+}
+
+.upload-id {
+    border: 1px solid #dddddd;
+    height: 42px;
+    align-self: center;
+    padding: 0px 20px;
+    border-radius: 10px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    font-weight: bold;
+    background: transparent;
+    max-width: 280px;
+    outline: none;
+    width: 100%;
+
+    &__wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px;
+        width: 90%;
     }
 }

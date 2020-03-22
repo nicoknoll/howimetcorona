@@ -28,5 +28,13 @@
             background-color: #4c9ad6;
         }
     }
+
+    &--upload {
+        min-width: 130px;
+        padding: 12px 20px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        margin: 0px;
+    }
 }
 

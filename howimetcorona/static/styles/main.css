@@ -157,6 +157,13 @@
 .button--form:hover {
   background-color: #4c9ad6;
 }
+.button--upload {
+  min-width: 130px;
+  padding: 12px 20px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  margin: 0px;
+}
 
 html, body {
   height: 100%;
@@ -311,6 +318,28 @@ a {
 }
 .footer__link {
   color: #999;
+}
+
+.upload-id {
+  border: 1px solid #dddddd;
+  height: 42px;
+  align-self: center;
+  padding: 0px 20px;
+  border-radius: 10px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  font-weight: bold;
+  background: transparent;
+  max-width: 280px;
+  outline: none;
+  width: 100%;
+}
+.upload-id__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  width: 90%;
 }
 
 /*# sourceMappingURL=main.css.map */
