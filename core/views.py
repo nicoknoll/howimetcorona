@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 import json
 import uuid
 
+from django.contrib import messages
 from django.views.generic import TemplateView, FormView
 from django.db import transaction
 from django.urls import reverse_lazy, reverse
@@ -247,7 +248,7 @@ class CheckView(FormView):
                     visited_at__lt=max_date
                 )
 
-        risk_points = list(VisitedPoint.objects.filter(filters))
+        risk_points = list(VisitedPoint.objects.filter(filters)) if filters else []
 
         self.request.session[RISK_SESSION_KEY] = [{
             'lat': float(point.lat),
@@ -270,6 +271,7 @@ class MapView(JsDataMixin, TemplateView):
         # map should only show results from check
         self._points = self.request.session.get(POINTS_SESSION_KEY, [])
         if not self._points:
+            messages.warning(request, 'No valid location points found in your file.')
             return HttpResponseRedirect(reverse('core:check'))
 
         return super().dispatch(request, *args, **kwargs)

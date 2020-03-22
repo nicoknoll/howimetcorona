@@ -9,6 +9,16 @@
 {% endblock %}
 
 {% block content %}
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message message--{{ message.level }}">
+                {{ message.message }}
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <div class="form__wrapper">
         <form class="form{% if not form.visible_fields %} form--hidden{% endif %}" method="post"
               enctype="multipart/form-data">

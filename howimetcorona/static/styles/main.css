@@ -260,6 +260,25 @@ a {
   text-align: center;
 }
 
+.messages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message {
+  margin: 30px 20px;
+  padding: 20px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 10px 10px 58px -24px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  font-size: 12px;
+}
+.message--warning, .message--30 {
+  background: #ffef9a;
+}
+
 .map {
   height: calc(100% - 80px);
 }
