@@ -50,6 +50,18 @@
     font-size: 12px;
     float: right;
     margin-top: 2px;
+
+    &:before{
+        content: 'Where can I find my Location History?';
+        display: block;
+    }
+
+    @media only screen and (max-width: 600px) {
+        &:before{
+            content: 'Location History?';
+            display: block;
+        }
+    }
 }
 
 .file-upload-content {
@@ -115,4 +127,15 @@
     &:hover {
         cursor: pointer;
     }
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    background: rgba(136, 201, 249, 0.3);
+    border: 1px solid rgba(136, 201, 249, 0.5);
+    color: rgba(0,0,0, 0.6);
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active {
+    background-color: #4c9ad6;
+    border: 1px solid darken(#4c9ad6, 10%);
 }
