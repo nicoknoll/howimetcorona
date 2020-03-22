@@ -50,6 +50,18 @@
     font-size: 12px;
     float: right;
     margin-top: 2px;
+
+    &:before{
+        content: 'Where can I find my Location History?';
+        display: block;
+    }
+
+    @media only screen and (max-width: 600px) {
+        &:before{
+            content: 'Location History?';
+            display: block;
+        }
+    }
 }
 
 .file-upload-content {

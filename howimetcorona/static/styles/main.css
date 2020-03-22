@@ -43,6 +43,16 @@
   float: right;
   margin-top: 2px;
 }
+.file-info:before {
+  content: "Where can I find my Location History?";
+  display: block;
+}
+@media only screen and (max-width: 600px) {
+  .file-info:before {
+    content: "Location History?";
+    display: block;
+  }
+}
 
 .file-upload-content {
   display: none;
