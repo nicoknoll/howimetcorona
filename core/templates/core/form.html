@@ -67,7 +67,7 @@
                                 {% endif %}
 
                                 {% if field.name == 'symptoms_at' %}
-                                    <input type="text" id="id_{{ field.name }}" name="{{ field.name }}" size="30" placeholder="YYYY-MM-DD" autocomplete="off">
+                                    <input type="text" id="id_{{ field.name }}" name="{{ field.name }}" size="30" placeholder="YYYY-MM-DD" autocomplete="off" required>
                                 {% else %}
                                     {{ field }}
                                 {% endif %}
